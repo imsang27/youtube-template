@@ -11,6 +11,14 @@ export const NO_INTERNET_CATCHING_ERROR = 'net::ERR_INTERNET_DISCONNECTED';
 export const ROOT_FOLDER = '/';
 export const DEFAULT_CHAPTER_FORMAT = ' - "{{chapter}}"\n';
 export const DEFAULT_HASHTAG_FORMAT = ' - "#{{hashtag}}"\n';
+
+/**
+ * [Reason for Change: Optimized YouTube Embedding]
+ * 1. Native Obsidian Player: Using the ![]() syntax allows Obsidian to render its optimized internal player.
+ * 2. UI Consistency: Player controls (volume, fullscreen, etc.) are displayed more reliably compared to the iframe method.
+ * 3. Fixes Playback Errors: Prevents "Video unavailable" errors often caused by CORS or iframe restrictions in certain Markdown environments.
+ * 4. Note: Even with a standard /watch URL, Obsidian handles the rendering so only the video player is displayed without the full YouTube UI.
+ */
 export const DEFAULT_TEMPLATE = `---
 tags:
   - type/youtube
@@ -33,7 +41,7 @@ template-version: "1.0"
 
 ![[{{thumbnail}}]]
 
-<iframe title="{{title}}" src="https://www.youtube.com/embed/{{id}}?feature=oembed" height="113" width="200" style="aspect-ratio: 1.76991 / 1; width: 100%; height: 100%;" allowfullscreen="" allow="fullscreen"></iframe>
+![{{title}}](https://www.youtube.com/watch?v={{id}})
 
 
 # 🌍 What It's About
