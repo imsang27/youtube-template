@@ -12,7 +12,13 @@ function processTemplateKey(key: string, videoData: VideoData, settings: YouTube
 		case 'chapters':
 			return videoData.chapters.map((chapter) => replaceAll(settings.chapterFormat, '{{chapter}}', chapter)).join('');
 		case 'hashtags':
-			return videoData.hashtags.map((hashtag) => replaceAll(settings.hashtagFormat, '{{hashtag}}', hashtag)).join('');
+			return videoData.hashtags
+				.map((hashtag) => {
+					// Add logic to replace spaces with underscores
+					const sanitizedHashtag = hashtag.replace(/\s+/g, '_');
+					return replaceAll(settings.hashtagFormat, '{{hashtag}}', sanitizedHashtag);
+				})
+				.join('');
 		default:
 			return key in videoData ? videoData[key as keyof VideoData].toString() : '';
 	}
